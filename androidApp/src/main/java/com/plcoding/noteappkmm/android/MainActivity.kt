@@ -71,10 +71,13 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyApplicationTheme {
                 val navController = rememberNavController()
+
                 NavHost(navController = navController, startDestination = "note_list") {
+
                     composable(route = "note_list") {
                         NoteListScreen(navController = navController)
                     }
+
                     composable(
                         route = "note_detail/{noteId}",
                         arguments = listOf(

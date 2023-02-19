@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    // plugin for sqldelight
     id("com.squareup.sqldelight")
 }
 
@@ -18,9 +19,14 @@ kotlin {
     }
 
     sourceSets {
+
         val commonMain by getting {
+            // Dependencies for commonMain dir, shared code for both platforms
+            // all libraries in shared need to be in Kotlin
             dependencies {
+                // sqldelight - db in kotlin supports KMM
                 implementation("com.squareup.sqldelight:runtime:1.5.3")
+                // datetime kotlin lib worse than java version
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
             }
         }
@@ -30,7 +36,9 @@ kotlin {
             }
         }
         val androidMain by getting {
+            // Dependencies for androidMain dir
             dependencies {
+                // sqldelight - android specific version in order to use it
                 implementation("com.squareup.sqldelight:android-driver:1.5.3")
             }
         }
@@ -39,7 +47,9 @@ kotlin {
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
         val iosMain by creating {
+            // Dependencies for iosMain dir
             dependencies {
+                // sqldelight - for iOS
                 implementation("com.squareup.sqldelight:native-driver:1.5.3")
             }
 
@@ -60,9 +70,13 @@ kotlin {
     }
 }
 
+// configuring sqldelight
+// to use sqldelight we need a plugin
 sqldelight {
+    // specify a name
     database("NoteDatabase") {
         packageName = "com.plcoding.noteappkmm.database"
+        // folder where the db will be which
         sourceFolders = listOf("sqldelight")
     }
 }
