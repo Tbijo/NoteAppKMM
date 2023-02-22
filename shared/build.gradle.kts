@@ -78,6 +78,10 @@ sqldelight {
         packageName = "com.plcoding.noteappkmm.database"
         // folder where the db will be which
         sourceFolders = listOf("sqldelight")
+        // this directory needs to be created manually
+
+        // THEN add tables and CRUD ops.
+        // then rebuild to generate classes
     }
 }
 

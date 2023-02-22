@@ -30,6 +30,7 @@ fun NoteItem(
     modifier: Modifier = Modifier
 ) {
     val formattedDate = remember(note.created) {
+        // execute this block only when note.created changes otherwise remember current value
         DateTimeUtil.formatNoteDate(note.created)
     }
     Column(
@@ -54,13 +55,18 @@ fun NoteItem(
                 contentDescription = "Delete note",
                 modifier = Modifier
                     .clickable(MutableInteractionSource(), null) {
+                        // turn off ripple effect on click
                         onDeleteClick()
                     }
             )
         }
+
         Spacer(modifier = Modifier.height(16.dp))
+
         Text(text = note.content, fontWeight = FontWeight.Light)
+
         Spacer(modifier = Modifier.height(16.dp))
+
         Text(
             text = formattedDate,
             color = Color.DarkGray,

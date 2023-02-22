@@ -5,8 +5,14 @@ import com.plcoding.noteappkmm.domain.note.Note
 import com.plcoding.noteappkmm.domain.note.NoteDataSource
 import com.plcoding.noteappkmm.domain.time.DateTimeUtil
 
-class SqlDelightNoteDataSource(db: NoteDatabase): NoteDataSource {
+// A specific implementation of NoteDataSource that uses SqlDelight
 
+class SqlDelightNoteDataSource(
+    // Access to database
+    db: NoteDatabase
+) : NoteDataSource {
+
+    // Access to db CRUD ops. functions
     private val queries = db.noteQueries
 
     override suspend fun insertNote(note: Note) {
@@ -21,8 +27,11 @@ class SqlDelightNoteDataSource(db: NoteDatabase): NoteDataSource {
 
     override suspend fun getNoteById(id: Long): Note? {
         return queries
+            // returns Query<>
             .getNoteById(id)
+            // maps it to Query to our NoteEntity if exists otherwise null
             .executeAsOneOrNull()
+            // map to our domain model Note
             ?.toNote()
     }
 

@@ -16,12 +16,14 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    // Provide DB
     @Provides
     @Singleton
     fun provideSqlDriver(app: Application): SqlDriver {
         return DatabaseDriverFactory(app).createDriver()
     }
 
+    // Provide DAO
     @Provides
     @Singleton
     fun provideNoteDataSource(driver: SqlDriver): NoteDataSource {

@@ -77,6 +77,7 @@ fun NoteDetailScreen(
                 },
                 singleLine = false,
                 textStyle = TextStyle(fontSize = 20.sp),
+                // to occupy remaining space
                 modifier = Modifier.weight(1f)
             )
         }

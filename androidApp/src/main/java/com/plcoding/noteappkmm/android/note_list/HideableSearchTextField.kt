@@ -29,6 +29,7 @@ fun HideableSearchTextField(
     modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier) {
+        // Search field
         AnimatedVisibility(
             visible = isSearchActive,
             enter = fadeIn(),
@@ -45,6 +46,7 @@ fun HideableSearchTextField(
                     .padding(end = 40.dp)
             )
         }
+        // Hide search field
         AnimatedVisibility(
             visible = isSearchActive,
             enter = fadeIn(),
@@ -58,6 +60,7 @@ fun HideableSearchTextField(
                 )
             }
         }
+        // Show search field
         AnimatedVisibility(
             visible = !isSearchActive,
             enter = fadeIn(),

@@ -42,17 +42,24 @@ class NoteDetailViewModel @Inject constructor(
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), NoteDetailState())
 
+    // navigate away when we save a note
+    // onUpdate navigate back to list
     private val _hasNoteBeenSaved = MutableStateFlow(false)
     val hasNoteBeenSaved = _hasNoteBeenSaved.asStateFlow()
 
+    // reference to a note we navigated to
+    // if we updated it we need to pass its noteId
     private var existingNoteId: Long? = null
 
     init {
         savedStateHandle.get<Long>("noteId")?.let { existingNoteId ->
+            // check if noteId exists
             if(existingNoteId == -1L) {
                 return@let
             }
+            // store the noteId
             this.existingNoteId = existingNoteId
+            // get note from db
             viewModelScope.launch {
                 noteDataSource.getNoteById(existingNoteId)?.let { note ->
                     savedStateHandle["noteTitle"] = note.title

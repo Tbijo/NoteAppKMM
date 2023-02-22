@@ -9,10 +9,19 @@
 import SwiftUI
 
 struct HideableSearchTextField<Destination: View>: View {
-    
+
+    // passable parameters from outside of this view
+
+    // get new text
     var onSearchToggled: () -> Void
+
+    // we want to pass a view to this view
+    // when we click on + btn in the toolbar we navigate
+    // we want to specify where to navigate from the outside when click on + btn
     var destinationProvider: () -> Destination
+
     var isSearchActive: Bool
+
     @Binding var searchText: String
     
     var body: some View {
@@ -35,6 +44,7 @@ struct HideableSearchTextField<Destination: View>: View {
     }
 }
 
+// Just for previews
 struct HideableSearchTextField_Previews: PreviewProvider {
     static var previews: some View {
         HideableSearchTextField(
