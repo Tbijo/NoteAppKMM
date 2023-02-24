@@ -1,11 +1,3 @@
-//
-//  NoteListViewModel.swift
-//  iosApp
-//
-//  Created by Philipp Lackner on 26.09.22.
-//  Copyright © 2022 orgName. All rights reserved.
-//
-
 import Foundation
 import shared
 
@@ -27,7 +19,7 @@ extension NoteListScreen {
         private let searchNotes = SearchNotes()
 
         // State for normal notes list
-        // [Note] - list of type Note, () - creat the list
+        // [Note] - list of type Note, () - creat the list (constructor)
         private var notes = [Note]()
 
         // State for filtered notes list

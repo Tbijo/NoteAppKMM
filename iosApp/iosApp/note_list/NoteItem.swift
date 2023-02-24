@@ -1,11 +1,3 @@
-//
-//  NoteItem.swift
-//  iosApp
-//
-//  Created by Philipp Lackner on 26.09.22.
-//  Copyright © 2022 orgName. All rights reserved.
-//
-
 import SwiftUI
 import shared
 
@@ -14,15 +6,23 @@ struct NoteItem: View {
     var onDeleteClick: () -> Void
     
     var body: some View {
+        
+        // VStack - Vertical Stack (Column)
+        // alignment: .leading - alingned to left (start)
         VStack(alignment: .leading) {
             HStack {
                 Text(note.title)
                     .font(.title3)
                     .fontWeight(.semibold)
+
+                // Spacer pushes both views appart from eachother
                 Spacer()
+
                 Button(action: onDeleteClick) {
                     Image(systemName: "xmark").foregroundColor(.black)
                 }
+            
+            // bottom padding is equal to 3
             }.padding(.bottom, 3)
             
             Text(note.content)
@@ -31,12 +31,14 @@ struct NoteItem: View {
             
             HStack {
                 Spacer()
+                // DateTimeUtil().formatNoteDate - iOS doesnt know objects so we need to make an instance
                 Text(DateTimeUtil().formatNoteDate(dateTime: note.created))
                     .font(.footnote)
                     .fontWeight(.light)
             }
         }
         .padding()
+        // We created a custom constructor for generating color from Long (int64)
         .background(Color(hex: note.colorHex))
         .clipShape(RoundedRectangle(cornerRadius: 5.0))
     }

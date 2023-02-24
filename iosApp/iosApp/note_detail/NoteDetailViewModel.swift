@@ -1,19 +1,13 @@
-//
-//  NoteDetailViewModel.swift
-//  iosApp
-//
-//  Created by Philipp Lackner on 26.09.22.
-//  Copyright © 2022 orgName. All rights reserved.
-//
-
 import Foundation
 import shared
 
 extension NoteDetailScreen {
+
     @MainActor class NoteDetailViewModel: ObservableObject {
-        private var noteDataSource: NoteDataSource?
         
+        private var noteDataSource: NoteDataSource?
         private var noteId: Int64? = nil
+        
         @Published var noteTitle = ""
         @Published var noteContent = ""
         @Published private(set) var noteColor = Note.Companion().generateRandomColor()
@@ -33,13 +27,23 @@ extension NoteDetailScreen {
             }
         }
         
+        // onSaved - when note is saved navigate back
+        // @escaping - must be anotated in order to onSaved from completionHandler
         func saveNote(onSaved: @escaping () -> Void) {
             noteDataSource?.insertNote(
-                note: Note(id: noteId == nil ? nil : KotlinLong(value: noteId!), title: self.noteTitle, content: self.noteContent, colorHex: self.noteColor, created: DateTimeUtil().now()), completionHandler: { error in
+                note: Note(
+                    id: noteId == nil ? nil : KotlinLong(value: noteId!), 
+                    title: self.noteTitle, 
+                    content: self.noteContent, 
+                    colorHex: self.noteColor, 
+                    created: DateTimeUtil().now()
+                    ), 
+                completionHandler: { error in
                     onSaved()
                 })
         }
         
+        // set params of this ViewModel
         func setParamsAndLoadNote(noteDataSource: NoteDataSource, noteId: Int64?) {
             self.noteDataSource = noteDataSource
             loadNoteIfExists(id: noteId)
